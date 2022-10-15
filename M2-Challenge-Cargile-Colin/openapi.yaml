@@ -1,0 +1,247 @@
+openapi: 3.0.1
+info:
+  title: Module 2 Challenge
+  description: |-
+    This is a Month and Math Solution REST API, that was built using Spring Boot. With this service you can as the user convert the number of any month to its corresponding text, for example entering "3" = "March". As a user you can also request an randomly selected month by executing the randomMonth route. 
+    
+    The other four routes are simple math operations one for each, addition, subtraction, multiplication and division. By entering two integers into each operation you will get back the result of said operation.
+    
+    Some useful links:
+    - [My GitHub](https://github.com/GundamMosi10)
+  
+  
+      
+  version: v0
+servers:
+  - url: http://localhost:8080
+    description: Generated server url
+paths:
+  /subtract:
+    post:
+      tags:
+        - math-solution-controller
+      summary: Finds the difference of two integers
+      description: Finds the difference between the two integers that the user inputs for operand1 and operand2.
+      operationId: differenceOfTwoNums
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MathSolution'
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/MathSolution'
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/CustomErrorResponse'
+                  - $ref: '#/components/schemas/CustomErrorResponse'
+  /multiply:
+    post:
+      tags:
+        - math-solution-controller
+      summary: Finds the product of two integers
+      description: Finds the product between the two integers that the user inputs for operand1 and operand2.
+      operationId: productOfTwoNums
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MathSolution'
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/MathSolution'
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/CustomErrorResponse'
+                  - $ref: '#/components/schemas/CustomErrorResponse'
+  /divide:
+    post:
+      tags:
+        - math-solution-controller
+      summary: Finds the quotient of two integers
+      description: Finds the quotient between the two integers that the user inputs for operand1 and operand2. Since you cannot divide by 0, the denominator cannot be 0 in this operation. 
+      operationId: quotientOfTwoNums
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MathSolution'
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/MathSolution'
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/CustomErrorResponse'
+                  - $ref: '#/components/schemas/CustomErrorResponse'
+  /add:
+    post:
+      tags:
+        - math-solution-controller
+      summary: Finds the sum of two integers
+      description: Finds the sum between the two integers that the user inputs for operand1 and operand2.
+      operationId: sumOfTwoNums
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MathSolution'
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/MathSolution'
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/CustomErrorResponse'
+                  - $ref: '#/components/schemas/CustomErrorResponse'
+  /randomMonth:
+    get:
+      tags:
+        - month-and-math-service-controller
+      summary: Returns a random month
+      description: Returns a random month when this is executed. 
+      operationId: getRandomMonth
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Month'
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/CustomErrorResponse'
+                  - $ref: '#/components/schemas/CustomErrorResponse'
+  /month/{monthNumber}:
+    get:
+      tags:
+        - month-and-math-service-controller
+      summary: Converts the given integer into a month
+      description: Converts the user input integer into the corresponding month of the year.
+      operationId: getMonthByMonthNumber
+      parameters:
+        - name: monthNumber
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Month'
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/CustomErrorResponse'
+                  - $ref: '#/components/schemas/CustomErrorResponse'
+components:
+  schemas:
+    CustomErrorResponse:
+      type: object
+      properties:
+        errorMsg:
+          type: string
+        status:
+          type: integer
+          format: int32
+        errorCode:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+    MathSolution:
+      required:
+        - operand1
+        - operand2
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          example: 1
+        operand1:
+          type: integer
+          format: int32
+          example: 20
+        operand2:
+          type: integer
+          format: int32
+          example: 10
+        operation:
+          type: string
+          example: add
+        answer:
+          type: integer
+          format: int32
+          example: 30
+    Month:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          example: 1
+        number:
+          type: integer
+          format: int32
+          example: 3
+        name:
+          type: string
+          example: March

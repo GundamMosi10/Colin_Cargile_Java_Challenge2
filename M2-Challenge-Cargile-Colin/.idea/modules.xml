@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/M2-Challenge-Cargile-Colin.iml" filepath="$PROJECT_DIR$/.idea/M2-Challenge-Cargile-Colin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MonthAndMathService/MonthAndMathService.iml" filepath="$PROJECT_DIR$/MonthAndMathService/MonthAndMathService.iml" />
+    </modules>
+  </component>
+</project>
